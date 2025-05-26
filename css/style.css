@@ -1,0 +1,44 @@
+.bg-light-green {
+            background-color:rgb(230, 255, 236);
+        }
+        .bg-light-gray {
+            background-color: #f8f9fa;
+        }
+        .section-title {
+            background-color: #dee2e6;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .human-body {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .body-part {
+            position: relative;
+            cursor: pointer;
+        }
+        .body-part img {
+            width: 150px;
+            height: auto;
+        }
+        .pain-level {
+            display: none;
+            position: absolute;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        .marked-area {
+            position: absolute;
+            border: 2px solid red;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: red;
+            font-weight: bold;
+        }

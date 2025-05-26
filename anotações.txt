@@ -1,0 +1,112 @@
+adc telefone familiar 
+adc como nos conheceu?
+ficha atual é para pilates
+
+
+ficha de evolução 
+pegar nomes de aparelhos e exercícios e observações
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para marcar áreas de dor no corpo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Front body click handler
+            document.getElementById('frontBody').addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const painLevel = document.getElementById('frontPainLevel');
+                painLevel.style.display = 'block';
+                painLevel.style.left = `${x}px`;
+                painLevel.style.top = `${y}px`;
+                
+                // Store click position for later use
+                painLevel.dataset.x = x;
+                painLevel.dataset.y = y;
+            });
+            
+            // Back body click handler
+            document.getElementById('backBody').addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const painLevel = document.getElementById('backPainLevel');
+                painLevel.style.display = 'block';
+                painLevel.style.left = `${x}px`;
+                painLevel.style.top = `${y}px`;
+                
+                // Store click position for later use
+                painLevel.dataset.x = x;
+                painLevel.dataset.y = y;
+            });
+            
+            // Confirm front pain
+            document.getElementById('confirmFrontPain').addEventListener('click', function() {
+                const painValue = document.getElementById('frontPainValue').value;
+                if (painValue >= 0 && painValue <= 10) {
+                    const painLevel = document.getElementById('frontPainLevel');
+                    const x = painLevel.dataset.x;
+                    const y = painLevel.dataset.y;
+                    
+                    // Remove existing marks
+                    const existingMarks = document.querySelectorAll('#frontBody .marked-area');
+                    existingMarks.forEach(mark => mark.remove());
+                    
+                    // Create new mark
+                    const mark = document.createElement('div');
+                    mark.className = 'marked-area';
+                    mark.style.left = `${x - 25}px`;
+                    mark.style.top = `${y - 25}px`;
+                    mark.style.width = '50px';
+                    mark.style.height = '50px';
+                    mark.textContent = painValue;
+                    
+                    document.getElementById('frontBody').appendChild(mark);
+                    painLevel.style.display = 'none';
+                }
+            });
+            
+            // Confirm back pain
+            document.getElementById('confirmBackPain').addEventListener('click', function() {
+                const painValue = document.getElementById('backPainValue').value;
+                if (painValue >= 0 && painValue <= 10) {
+                    const painLevel = document.getElementById('backPainLevel');
+                    const x = painLevel.dataset.x;
+                    const y = painLevel.dataset.y;
+                    
+                    // Remove existing marks
+                    const existingMarks = document.querySelectorAll('#backBody .marked-area');
+                    existingMarks.forEach(mark => mark.remove());
+                    
+                    // Create new mark
+                    const mark = document.createElement('div');
+                    mark.className = 'marked-area';
+                    mark.style.left = `${x - 25}px`;
+                    mark.style.top = `${y - 25}px`;
+                    mark.style.width = '50px';
+                    mark.style.height = '50px';
+                    mark.textContent = painValue;
+                    
+                    document.getElementById('backBody').appendChild(mark);
+                    painLevel.style.display = 'none';
+                }
+            });
+            
+            // Botão Voltar
+            document.getElementById('backBtn').addEventListener('click', function() {
+                window.location.href = 'index.php';
+            });
+            
+            // Form submission
+            document.getElementById('patientForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Aqui você adicionaria o código para enviar os dados para o servidor
+                alert('Dados do paciente salvos com sucesso!');
+                // window.location.href = 'index.php';
+            });
+            
+        });
+    </script>
