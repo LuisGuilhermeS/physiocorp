@@ -42,3 +42,8 @@
             color: red;
             font-weight: bold;
         }
+
+        .navbar {
+            background-color: #c4c7b6;
+            padding: 30px;
+        }

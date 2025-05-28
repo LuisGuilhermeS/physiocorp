@@ -21,9 +21,12 @@ if (isset($_SESSION['msg'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="img/logo.png" type="image/x-icon">
 </head>
-<div class="container py-4">
+<?php
+include 'templates/navbar.html';
+?>
+ <div class="container py-4">
     <header class="text-center mb-4">
         <h1 class="display-4">Physiocorp</h1>
     </header>
     <body class="bg-light-green">
-        
+       

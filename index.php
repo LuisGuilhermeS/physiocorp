@@ -1,21 +1,32 @@
 <?php
 include_once 'templates/header.php';
+include_once 'config/connection.php';
+$patient_record = [];
+
+$search = $_GET['search'] ?? '';
+
+if ($search) {
+    $stmt = $conn->prepare("SELECT * FROM patient_record WHERE nome LIKE :search");
+    $stmt->bindValue(':search', '%' . $search . '%');
+    $stmt->execute();
+    $patient_record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $stmt = $conn->query("SELECT * FROM patient_record");
+    $patient_record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <body class="bg-light-green">
     <div class="container">
-        
-    <nav class="navbar mb-3">
-        <a href="<?= $BASE_URL ?>agenda.php"><button class="btn btn-success ">Agenda</button></a>
-        <a href="<?= $BASE_URL ?>cadastro.php"><button class="btn btn-success ">Cadastrar Paciente</button></a>
-    </nav>
         <!--barra pesquisa-->
+        <form action="GET">
         <div class="search-box mb-4 p-3 bg-white rounded shadow">
             <div class="input-group">
-                <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por ID ou nome...">
+                <input type="text" name="search" id="search" class="form-control" placeholder="Pesquisar por nome...">
                 <button class="btn btn-primary" id="searchBtn"><i class="fas fa-search"></i> Pesquisar</button>
             </div>
         </div>
+        </form>
         <!--notificação-->
         <?php if (isset($printMsg) && $printMsg != ['']): ?>
             <p id="msg"><?= $printMsg ?></p>
@@ -25,7 +36,12 @@ include_once 'templates/header.php';
             <thead>
                 <div class="patients-list">
                     <div class="card-header bg-light-gray text-center rouded shadow">
-                        <h5 class="mb-0">Lista de Pacientes</h5>
+                        <tr>
+                            <th scope="col">Data de Avaliação</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col" class="actions">Ações</th>
+                        </tr>
                     </div>
                 </div>
             </thead>
@@ -33,14 +49,14 @@ include_once 'templates/header.php';
                 <?php if (count($patient_record) > 0): ?>
                     <?php foreach ($patient_record as $patient): ?>
                         <tr>
-                            <td scope='row'><?= $patient['id'] ?></td>
+                            <td scope='row'><?= date("d/m/y", strtotime($patient['date_evaluation'])) ?></td>
                             <td scope='row'><?= $patient['name'] ?></td>
                             <td scope='row'><?= $patient['phone'] ?></td>
                             <td class='actions'>
-                                <div class="d-flex flex-column flex-md-row gap-2">
-                                    <a class="btn btn-sm btn-primary me-1 view-btn" href="<? $BASE_URL ?>show.php"data-id="<?= $patient['id'] ?>"><i
+                                <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                                    <a class="btn btn-sm btn-primary me-1 view-btn" href="<?= $BASE_URL ?>show.php?id=<?= $patient['id'] ?>"><i
                                             class="fas fa-eye"></i></a>
-                                    <a class="btn btn-sm btn-warning me-1 edit-btn" href="<? $BASE_URL ?>edit.php"data-id="<?= $patient['id'] ?>"><i
+                                    <a class="btn btn-sm btn-warning me-1 edit-btn" href="<?= $BASE_URL ?>cadastro.php?id=<?= $patient['id'] ?>"><i
                                             class="fas fa-edit"></i></a>
                                     <form class='d-inline-block' action="<?= $BASE_URL ?>/config/process.php" method="POST">
                                         <input type="hidden" name="type" value="delete">
