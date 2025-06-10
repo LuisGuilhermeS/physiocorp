@@ -1,27 +1,41 @@
 <?php
 include_once 'config/url.php'; 
 include_once 'config/connection.php';
+class ConsultGet {
+    private $conn;
 
-//retorna os dados de um contato específico
-$id;
-if(!empty($_GET['id'])){
-    $id =$_GET['id'];
+    public function __construct($connection) {
+        $this->conn = $connection;
+    }
+
+    public function getPatientRecords($id = null) {
+        if ($id) {
+            $query = 'SELECT * FROM patient_record WHERE id = :id';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch();
+        } else {
+            $query = 'SELECT * FROM patient_record';
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
+    }
 }
-if(!empty($id)){
 
-    $query = 'SELECT * FROM patient_record WHERE id = :id';
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    
-    $patient_record = $stmt->fetch();
+class ConsultPost {
+    private $conn;
 
-}else{
-//retorna todos os contatos
-    $patient_record = [];
-    
-    $query = 'SELECT * FROM patient_record';
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-    $patient_record = $stmt->fetchAll();
+    public function __construct($connection) {
+        $this->conn = $connection;
+    }
+
+    public function searchPatientRecords($search) {
+        $query = 'SELECT * FROM patient_record WHERE name LIKE :search';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':search', '%' . $search . '%');
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
