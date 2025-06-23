@@ -1,3 +1,11 @@
+.navbar {
+    background-color: #e6dcd0;
+    padding: 30px;
+}
+.color-name{
+    font-weight: bold;
+    color: #f9705e;
+}
 .bg-light-green {
             background-color:rgb(230, 255, 236);
         }
@@ -10,7 +18,7 @@
             border-radius: 5px;
             margin-bottom: 15px;
         }
-        .human-body {
+/*        .human-body {
             display: flex;
             justify-content: space-around;
             margin: 20px 0;
@@ -42,8 +50,35 @@
             color: red;
             font-weight: bold;
         }
+*/
+        /*estilização dos botões*/
 
-        .navbar {
-            background-color: #c4c7b6;
-            padding: 30px;
-        }
+        .hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+    background-color: #72e8be;
+    color: white;
+  }
+
+  .hover-shadow {
+    transition: all 0.3s ease;
+  }
+   .save-hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+    background-color: #72e8be;
+    color: white;
+  }
+
+  .save-hover-shadow {
+    transition: all 0.3s ease;
+  }
+
+  .btn-month:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+    background-color: #0c31ee;
+    color: white;
+  }
+
+  .btn-month {
+    transition: all 0.3s ease;
+  }
+  

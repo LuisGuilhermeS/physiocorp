@@ -26,7 +26,7 @@ include 'templates/navbar.html';
 ?>
  <div class="container py-4">
     <header class="text-center mb-4">
-        <h1 class="display-4">Physiocorp</h1>
+        <h1 class="display-4 color-name">Physiocorp</h1>
     </header>
     <body class="bg-light-green">
        
