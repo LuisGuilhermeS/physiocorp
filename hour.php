@@ -13,8 +13,13 @@ $dataStr = "$ano-$mes-$dia";
       $hora = sprintf('%02d:00', $h);
       echo "<div class='col-md-4 mb-3'>";
       echo "<div class='card'><div class='card-body'>";
-      echo "<h5>$hora</h5>";
+      echo "<h5 class='text-center'>$hora</h5>";
       echo "<textarea class='form-control mb-4' id='comentario-$hora' placeholder='Digite um comentário...'></textarea>";
+      
+      
+      echo "<input class='form-check-input' type='checkbox' id='alunoGymn'> <label class='form-check-label' for='alunoGym'>aluno Gympass</label>";
+
+
       echo "<button class='btn save-hover-shadow w-100' onclick='salvarComentario($dia, $mes, $ano, \"$hora\")'>Salvar</button>";
       echo "</div></div></div>";
     }
