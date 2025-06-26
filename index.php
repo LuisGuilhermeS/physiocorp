@@ -16,7 +16,6 @@ if ($search) {
 }
 ?>
 
-<body class="bg-light-green">
     <div class="container">
         <!--barra pesquisa-->
         <form action="GET">
@@ -37,7 +36,7 @@ if ($search) {
                 <div class="patients-list">
                     <div class="card-header bg-light-gray text-center rouded shadow">
                         <tr>
-                            <th scope="col">Data de Avaliação</th>
+                            <th scope="col">frequência</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Telefone</th>
                             <th scope="col" class="actions">Ações</th>
@@ -49,7 +48,7 @@ if ($search) {
                 <?php if (count($patient_record) > 0): ?>
                     <?php foreach ($patient_record as $patient): ?>
                         <tr>
-                            <td scope='row'><?= date("d/m/y", strtotime($patient['date_evaluation'])) ?></td>
+                            <td scope='row'></td>
                             <td scope='row'><?= $patient['name'] ?></td>
                             <td scope='row'><?= $patient['phone'] ?></td>
                             <td class='actions'>

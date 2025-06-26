@@ -1,8 +1,5 @@
 <?php
-include 'config/connection.php';
 include 'templates/header.php';
-include 'config/url.php';
-
 $mes = isset($_GET['mes']) ? (int)$_GET['mes'] : date('m');
 $ano = isset($_GET['ano']) ? (int)$_GET['ano'] : date('Y');
 
@@ -23,16 +20,7 @@ $primeiroDiaSemana = date('w', $data);
 setlocale(LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'Portuguese_Brazil.1252');
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Calendário</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="container mt-4">
-
+<div class="container">
   <div class="d-flex justify-content-between mb-3">
     <a href="?mes=<?= $mes - 1 ?>&ano=<?= $mes == 1 ? $ano - 1 : $ano ?>" class="btn btn-month">← Mês Anterior</a>
     <h3><?= strftime('%B de %Y', $data) ?></h3>

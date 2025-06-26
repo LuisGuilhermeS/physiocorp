@@ -81,4 +81,79 @@
   .btn-month {
     transition: all 0.3s ease;
   }
-  
+  /*-----------------------------------------------------------------------*/
+      .circular-progress {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: conic-gradient(lightgray 0deg 360deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #ccc;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-inner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    table td {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    #calendar-container {
+      max-width: 320px;
+      border: 1px solid #ccc;
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin: 20px auto;
+    }
+    
+    .calendar-day {
+      width: 36px;
+      height: 36px;
+      margin: 3px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #eee;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .calendar-day.selected {
+      background-color: #8fce8f;
+      color: white;
+    }
+
+    .calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 36px);
+  gap: 3px;
+  margin-bottom: 5px;
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 36px);
+  gap: 3px;
+}
