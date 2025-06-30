@@ -7,6 +7,7 @@ include 'config/process.php';
   $isEditing = isset($patient_record['id']);
   $type = $isEditing ? 'edit' : 'create';
 ?>
+<div class="container">
 <form action="<?= $BASE_URL ?>config/process.php" method="POST">
     <input type="hidden" name="type" value="<?= $type ?>">
     
