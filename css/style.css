@@ -157,3 +157,14 @@
   grid-template-columns: repeat(7, 36px);
   gap: 3px;
 }
+.btn-delete{
+color:#dd1c1a;
+}
+.btn-eye{
+color:#0c31ee;
+}
+.btn-read{
+  color:#045e51;
+}
+
+/*azul botão eye #5b75f3*/

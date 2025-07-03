@@ -1,5 +1,5 @@
 <?php
-include_once 'templates/header.php';
+include_once '../templates/header.php';
 
 ?>
 
@@ -10,7 +10,7 @@ include_once 'templates/header.php';
     </div>
 
     <form action="<?= $BASE_URL ?>config/process.php" method="POST">
-        <input type="hidden" name="type" value="create">
+        <input type="hidden" name="type" value="edit">
 
         <div class="card mb-4">
             <div class="card-header bg-light-gray">
@@ -98,5 +98,5 @@ include_once 'templates/header.php';
 </div>
 
 <?php
-include_once 'templates/footer.php';
+include_once '../templates/footer.php';
 ?>

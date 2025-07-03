@@ -172,3 +172,38 @@ Essa aplicação será usada para gerenciamento de agenda de pacientes, gerencia
         <?php
         include_once 'templates/footer.php';
         ?>
+
+
+
+
+
+
+
+
+
+
+        
+// Se for uma requisição POST: salvar dados
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($data && isset($data['id']) && isset($data['nome']) && isset($data['freq'])) {
+        $id = $data['id'];
+        $nome = $data['nome'];
+        $frequencia_json = json_encode($data['freq']);
+
+        $stmt = $conn->prepare("INSERT INTO frequencias (id_paciente, nome, dados_frequencia) 
+                                VALUES (?, ?, ?) 
+                                ON DUPLICATE KEY UPDATE dados_frequencia = ?");
+        $stmt->execute([$id, $nome, $frequencia_json, $frequencia_json]);
+
+        echo json_encode(["status" => "salvo"]);
+    } else {
+        echo json_encode(["status" => "erro", "mensagem" => "Dados incompletos."]);
+    }
+
+    exit;
+}
+
+// Qualquer outro tipo de requisição
+echo json_encode(["status" => "erro", "mensagem" => "Método não suportado."]);
