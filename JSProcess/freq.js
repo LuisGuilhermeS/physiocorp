@@ -1,5 +1,5 @@
 let pacientes = [
-  // Exemplo: { id: 1, nome: "Paciente", freq: { "2025-7": [2, 4, 10] } }
+    { id: 1, nome: "Paciente", freq: { "2025-7": [2, 4, 10] } }
 ];
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
@@ -121,7 +121,7 @@ function renderCalendar(pacienteId) {
     if (paciente.freq[key].includes(dia)) {
       div.classList.add("selected");
     }
-
+// após click, adiciona ou exclui os dias 
     div.onclick = () => {
       if (paciente.freq[key].includes(dia)) {
         paciente.freq[key] = paciente.freq[key].filter(d => d !== dia);
@@ -146,6 +146,7 @@ function salvar() {
   const paciente = pacientes.find(p => p.id === pacienteAtualId);
   const key = `${currentYear}-${currentMonth + 1}`;
   // Monta array de datas completas para o backend
+
   const datas = (paciente.freq[key] || []).map(dia => {
     const mes = String(currentMonth + 1).padStart(2, '0');
     const diaStr = String(dia).padStart(2, '0');
