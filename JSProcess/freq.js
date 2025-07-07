@@ -1,38 +1,32 @@
-// freq.js atualizado para:
-// - carregar dados do PHP
-// - exibir calendário automaticamente
-// - salvar automaticamente ao marcar/desmarcar dias
-
-let pacientes = [];
+let pacientes = [
+  // Exemplo: { id: 1, nome: "Paciente", freq: { "2025-7": [2, 4, 10] } }
+];
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
-let pacienteAtualId = null;
+let pacienteAtualId = window.idPacienteAtual || null;
 const calendarContainer = document.getElementById("calendar-container");
 
-// ID e nome do paciente vindos do PHP
-const pacienteId = window.pacienteId; // definir no PHP com <script>window.pacienteId = <?= $patientGym['id'] ?>;</script>
-const pacienteNome = window.pacienteNome;
-
-// Buscar dados do paciente no banco
-fetch("busca_freq.php?id=" + pacienteId)
-  .then(res => res.json())
-  .then(data => {
-    pacientes = [{
-      id: pacienteId,
-      nome: pacienteNome,
-      freq: data
-    }];
-
-    renderCircle(pacienteId, getDiasDoMesSelecionados(pacienteId));
-    showCalendarForPatient(pacienteId); // Mostrar automaticamente
-  });
-
-function getDiasDoMesSelecionados(pacienteId) {
-  const key = `${currentYear}-${currentMonth + 1}`;
-  const paciente = pacientes.find(p => p.id === pacienteId);
-  return paciente && paciente.freq[key] ? paciente.freq[key].length : 0;
+// Função para buscar e carregar frequência do paciente
+function carregarFrequenciaPaciente(pacienteId) {
+  const chaveMes = `${currentYear}-${currentMonth + 1}`;
+  fetch(`getDates.php?id=${pacienteId}&mes=${chaveMes}`)
+    .then(res => res.json())
+    .then(datas => {
+      let paciente = pacientes.find(p => p.id === pacienteId);
+      if (!paciente) {
+        paciente = { id: pacienteId, nome: window.pacienteNome || '', freq: {} };
+        pacientes.push(paciente);
+      }
+      paciente.freq[chaveMes] = datas.map(dataStr => {
+        // dataStr: "2025-07-02" -> dia: 2
+        return parseInt(dataStr.split('-')[2], 10);
+      });
+      renderCircle(pacienteId, paciente.freq[chaveMes].length);
+      showCalendarForPatient(pacienteId);
+    });
 }
 
+// Função para renderizar o círculo de frequência
 function renderCircle(pacienteId, diasMarcados) {
   const percent = Math.floor((diasMarcados / 8) * 100);
   const angle = (diasMarcados / 8) * 360;
@@ -50,6 +44,7 @@ function renderCircle(pacienteId, diasMarcados) {
   text.textContent = `${percent}%`;
 }
 
+// Função para mostrar o calendário do paciente
 function showCalendarForPatient(pacienteId) {
   pacienteAtualId = pacienteId;
   const paciente = pacientes.find(p => p.id === pacienteId);
@@ -80,7 +75,7 @@ function showCalendarForPatient(pacienteId) {
       currentMonth = 11;
       currentYear--;
     }
-    renderCalendar(pacienteAtualId);
+    carregarFrequenciaPaciente(pacienteAtualId);
   };
 
   document.getElementById("nextMonth").onclick = () => {
@@ -89,10 +84,11 @@ function showCalendarForPatient(pacienteId) {
       currentMonth = 0;
       currentYear++;
     }
-    renderCalendar(pacienteAtualId);
+    carregarFrequenciaPaciente(pacienteAtualId);
   };
 }
 
+// Função para renderizar o calendário
 function renderCalendar(pacienteId) {
   const paciente = pacientes.find(p => p.id === pacienteId);
   if (!paciente) return;
@@ -134,19 +130,50 @@ function renderCalendar(pacienteId) {
         paciente.freq[key].push(dia);
         div.classList.add("selected");
       }
-
       renderCircle(pacienteId, paciente.freq[key].length);
-
-      // Salvar automaticamente
-      fetch("saveFreq.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(paciente)
-      });
     };
 
-   calendar.appendChild(div);
+    calendar.appendChild(div);
   }
+}
+
+// Função para salvar as datas selecionadas no banco
+function salvar() {
+  if (!pacienteAtualId) {
+    alert("Selecione um paciente primeiro.");
+    return;
+  }
+  const paciente = pacientes.find(p => p.id === pacienteAtualId);
+  const key = `${currentYear}-${currentMonth + 1}`;
+  // Monta array de datas completas para o backend
+  const datas = (paciente.freq[key] || []).map(dia => {
+    const mes = String(currentMonth + 1).padStart(2, '0');
+    const diaStr = String(dia).padStart(2, '0');
+    return `${currentYear}-${mes}-${diaStr}`;
+  });
+
+  fetch('saveDates.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id_paciente: pacienteAtualId,
+      datas: datas
+    })
+  })
+  .then(res => res.json())
+  .then(d => {
+    alert('Datas salvas com sucesso!');
+    carregarFrequenciaPaciente(pacienteAtualId);
+  });
+}
+
+// Evento para o botão de salvar
+document.getElementById('saveBtn')?.addEventListener('click', function(e) {
+  e.preventDefault();
+  salvar();
+});
+
+// Inicialização automática se paciente já estiver definido
+if (pacienteAtualId) {
+  carregarFrequenciaPaciente(pacienteAtualId);
 }
