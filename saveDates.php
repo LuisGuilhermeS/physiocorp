@@ -3,7 +3,7 @@ include 'config/connection.php';
 
 // Recebe dados do frontend
 $data = json_decode(file_get_contents("php://input"), true);
-$id_paciente = $data['id_paciente'];
+$id = $data['id'];
 $datas = $data['datas']; // array de datas ["2025-07-02", "2025-07-04"]
 
 // Agrupa datas por mês
@@ -18,8 +18,8 @@ foreach ($datas as $dataCompleta) {
 }
 
 // Verifica se já existe registro no banco
-$stmt = $conn->prepare("SELECT datas FROM frequencia WHERE id_paciente = :id");
-$stmt->execute([':id' => $id_paciente]);
+$stmt = $conn->prepare("SELECT datas FROM freqMonth WHERE id = :id");
+$stmt->execute([':id' => $id]);
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($result) {
@@ -36,13 +36,13 @@ if ($result) {
 
   // Atualizar no banco
   $datasAtualizadasJson = json_encode($datasExistentes);
-  $update = $conn->prepare("UPDATE frequencia SET datas = :datas WHERE id_paciente = :id");
-  $update->execute([':datas' => $datasAtualizadasJson, ':id' => $id_paciente]);
+  $update = $conn->prepare("UPDATE frequencia SET datas = :datas WHERE id = :id");
+  $update->execute([':datas' => $datasAtualizadasJson, ':id' => $id]);
 } else {
   // Novo registro
   $jsonParaSalvar = json_encode($frequenciaPorMes);
-  $insert = $conn->prepare("INSERT INTO frequencia (id_paciente, datas) VALUES (:id, :datas)");
-  $insert->execute([':id' => $id_paciente, ':datas' => $jsonParaSalvar]);
+  $insert = $conn->prepare("INSERT INTO frequencia (id, datas) VALUES (:id, :datas)");
+  $insert->execute([':id' => $id, ':datas' => $jsonParaSalvar]);
 }
 
 echo json_encode(['status' => 'ok']);

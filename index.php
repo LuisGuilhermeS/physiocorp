@@ -1,6 +1,6 @@
 <?php 
 include_once 'templates/header.php';
-$frequencias = [];
+$freqMonth = [];
 // Limpa a mensagem
 if (isset($_SESSION['msg'])) {
   $printMsg = $_SESSION['msg'];
@@ -22,15 +22,15 @@ if (isset($_SESSION['msg'])) {
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($frequencias as $paciente): ?>
+    <?php foreach ($freqMonth as $paciente): ?>
       <tr>
         <td>
-          <div class="circular-progress frequency-circle" data-id="<?= $paciente['id_paciente'] ?>"
-            id="circle-<?= $paciente['id_paciente'] ?>">
-            <div class="progress-inner" id="progressText-<?= $paciente['dados_frequencia'] ?>">0%</div>
+          <div class="circular-progress frequency-circle" data-id="<?= $paciente['id'] ?>"
+            id="circle-<?= $paciente['id'] ?>">
+            <div class="progress-inner" id="progressText-<?= $paciente['datas'] ?>">0%</div>
           </div>
         </td>
-        <td><?=$paciente['dados_frequencia']?></td>
+        <td><?=$paciente['datas']?></td>
         <td><?= htmlspecialchars($paciente['nome']) ?></td>
         <td>#</td>
 
@@ -38,7 +38,7 @@ if (isset($_SESSION['msg'])) {
           <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
             <a class="btn btn-sm btn-read" href="<?=$BASE_URL?>editGym.php"><i class="fas fa-edit"></i></a>
             <form method="POST" action="#" class="d-inline">
-              <input type="hidden" name="id" value="<?= $paciente['id_paciente'] ?>">
+              <input type="hidden" name="id" value="<?= $paciente['id'] ?>">
               <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Excluir?')">
                 <i class="fas fa-trash"></i>
               </button>

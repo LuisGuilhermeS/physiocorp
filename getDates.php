@@ -1,11 +1,12 @@
 <?php
 include 'config/connection.php';
+$freqMonth;
 
-$id_paciente = $_GET['id'] ?? 0;
-$mes = $_GET['mes'] ?? ''; // formato esperado: "2025-07"
+$id = $_GET['id'] ?? 0;
+$datas = $_GET['datas'] ?? ''; // formato esperado: "2025-07"
 
-$stmt = $conn->prepare("SELECT datas FROM frequencia WHERE id_paciente = :id");
-$stmt->execute([':id' => $id_paciente]);
+$stmt = $conn->prepare("SELECT datas FROM freqMonth WHERE id = :id");
+$stmt->execute([':id' => $id]);
 $result = $stmt->fetch();
 
 if ($result) {

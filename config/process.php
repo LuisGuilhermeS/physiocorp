@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once 'config/url.php'; 
 include_once 'config/connection.php';
 
@@ -26,7 +25,7 @@ if (!empty ($data)){
 
         $stmt->execute();
 
-        $frequencia = $stmt->fetch();
+        $paciente = $stmt->fetch();
     }else{
         //retorna todos os pacientes salvos no banco de dados
 
