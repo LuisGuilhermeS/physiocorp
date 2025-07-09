@@ -1,6 +1,6 @@
 <?php
-include_once 'url.php'; 
-include_once 'connection.php';
+include_once 'config/url.php'; 
+include_once 'config/connection.php';
 
 $dados = $_POST;
 
