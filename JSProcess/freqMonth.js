@@ -1,0 +1,90 @@
+
+  let idPacienteAtual = null;
+  let datasSelecionadas = [];
+  const calendario = document.getElementById('calendario');
+
+  let dataAtual = new Date(); // usada para mudar o mês
+  const mesTexto = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+    "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+  function gerarCalendario() {
+    calendario.innerHTML = '';
+    datasSelecionadas = [];
+
+    const ano = dataAtual.getFullYear();
+    const mes = dataAtual.getMonth();
+    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+
+    // Atualiza o nome do mês no topo
+    document.getElementById('mesAtual').textContent = `${mesTexto[mes]} ${ano}`;
+
+    for (let dia = 1; dia <= diasNoMes; dia++) {
+      const dataStr = `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+      const div = document.createElement('div');
+      div.classList.add('dia');
+      div.textContent = dia;
+      div.dataset.data = dataStr;
+
+      div.addEventListener('click', () => {
+        div.classList.toggle('selecionado');
+        if (datasSelecionadas.includes(dataStr)) {
+          datasSelecionadas = datasSelecionadas.filter(d => d !== dataStr);
+        } else {
+          datasSelecionadas.push(dataStr);
+        }
+      });
+
+      calendario.appendChild(div);
+    }
+
+    carregarDatasSalvas(); // recarrega as datas do paciente nesse mês
+  }
+
+  function mudarMes(incremento) {
+    dataAtual.setMonth(dataAtual.getMonth() + incremento);
+    gerarCalendario();
+  }
+
+  function abrirCalendario(id) {
+    idPacienteAtual = id;
+    gerarCalendario();
+  }
+  function carregarDatasSalvas() {
+    if (!idPacienteAtual) return;
+
+    const ano = dataAtual.getFullYear();
+    const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+    const chaveMes = `${ano}-${mes}`;
+
+    fetch(`getDates.php?id=${idPacienteAtual}&mes=${chaveMes}`)
+      .then(res => res.json())
+      .then(datas => {
+        datasSelecionadas = datas;
+        document.querySelectorAll('.dia').forEach(div => {
+          if (datas.includes(div.dataset.data)) {
+            div.classList.add('selecionado');
+          }
+        });
+      });
+  }
+
+
+  function salvar() {
+    if (!idPacienteAtual) {
+      alert("Selecione um paciente primeiro.");
+      return;
+    }
+
+    fetch('saveDates.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: idPacienteAtual,
+        datas: datasSelecionadas
+      })
+    })
+      .then(res => res.json())
+      .then(d => {
+        alert('Datas salvas com sucesso!');
+      });
+  }

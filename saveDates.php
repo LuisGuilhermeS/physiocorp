@@ -1,47 +1,47 @@
 <?php
 include 'config/connection.php';
 
-// Recebe dados do frontend
 $data = json_decode(file_get_contents("php://input"), true);
 $id = $data['id'];
-$datas = $data['datas']; // array de datas ["2025-07-02", "2025-07-04"]
+$datas = $data['datas']; // ex: ["2025-07-02", "2025-07-04"]
 
-// Agrupa datas por mês
 $frequenciaPorMes = [];
-
 foreach ($datas as $dataCompleta) {
-  $mes = substr($dataCompleta, 0, 7); // ex: "2025-07"
+  $mes = substr($dataCompleta, 0, 7);
   if (!isset($frequenciaPorMes[$mes])) {
     $frequenciaPorMes[$mes] = [];
   }
   $frequenciaPorMes[$mes][] = $dataCompleta;
 }
 
-// Verifica se já existe registro no banco
+// Verifica se já existe
 $stmt = $conn->prepare("SELECT datas FROM freqMonth WHERE id = :id");
 $stmt->execute([':id' => $id]);
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($result) {
-  // Já existe, mesclar com o JSON existente
   $datasExistentes = json_decode($result['datas'], true);
 
+  // Substituir os dados do mês atual pelos novos
   foreach ($frequenciaPorMes as $mes => $datasMesNovo) {
-    if (!isset($datasExistentes[$mes])) {
-      $datasExistentes[$mes] = [];
-    }
-    // Mesclar sem duplicar
-    $datasExistentes[$mes] = array_unique(array_merge($datasExistentes[$mes], $datasMesNovo));
+    $datasExistentes[$mes] = $datasMesNovo;
   }
 
-  // Atualizar no banco
+  // Remove meses que não vieram mais (ex: se o usuário desmarcou todas)
+  foreach ($datasExistentes as $mes => $datasSalvas) {
+    if (!isset($frequenciaPorMes[$mes])) {
+      unset($datasExistentes[$mes]);
+    }
+  }
+
   $datasAtualizadasJson = json_encode($datasExistentes);
-  $update = $conn->prepare("UPDATE frequencia SET datas = :datas WHERE id = :id");
+  $update = $conn->prepare("UPDATE freqMonth SET datas = :datas WHERE id = :id");
   $update->execute([':datas' => $datasAtualizadasJson, ':id' => $id]);
+
 } else {
-  // Novo registro
+  // Novo
   $jsonParaSalvar = json_encode($frequenciaPorMes);
-  $insert = $conn->prepare("INSERT INTO frequencia (id, datas) VALUES (:id, :datas)");
+  $insert = $conn->prepare("INSERT INTO freqMonth (id, datas) VALUES (:id, :datas)");
   $insert->execute([':id' => $id, ':datas' => $jsonParaSalvar]);
 }
 

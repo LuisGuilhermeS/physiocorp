@@ -1,9 +1,8 @@
 <?php
 include 'config/connection.php';
-$freqMonth;
 
 $id = $_GET['id'] ?? 0;
-$datas = $_GET['datas'] ?? ''; // formato esperado: "2025-07"
+$mes = $_GET['mes'] ?? ''; // formato esperado: "2025-07"
 
 $stmt = $conn->prepare("SELECT datas FROM freqMonth WHERE id = :id");
 $stmt->execute([':id' => $id]);

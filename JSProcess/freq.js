@@ -1,6 +1,4 @@
-let pacientes = [
-    { id: 1, nome: "Paciente", freq: { "2025-7": [2, 4, 10] } }
-];
+
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let pacienteAtualId = window.idPacienteAtual || null;

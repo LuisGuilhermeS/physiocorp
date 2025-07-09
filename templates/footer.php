@@ -1,4 +1,4 @@
-<script src="JSProcess/freq.js"></script>
+<script src="JSProcess/freqMonth.js"></script>
 </div>
 </body>
 </html>

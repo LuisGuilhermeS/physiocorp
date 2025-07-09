@@ -10,13 +10,13 @@ include_once 'templates/header.php';
     </div>
 
     <form action="<?= $BASE_URL ?>config/process.php" method="POST">
-        <input type="hidden" name="type" value="create">
+        <input type="hidden" name="type" value= "createGym">
 
         <div class="card mb-4">
             <div class="card-header bg-light-gray">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h4><?= isset($paciente['nome']) ? htmlspecialchars($paciente['nome']) : 'Novo Paciente' ?></h4>
+                        <h4 style="text-warning"><?= isset($paciente['nome']) ? htmlspecialchars($paciente['nome']) : 'Novo Paciente' ?></h4>
                     </div>
                     <div class="circular-progress frequency-circle" data-id="<?= $paciente['id_paciente'] ?? '' ?>"
                         id="circle-<?= $paciente['id_paciente'] ?? '' ?>">
