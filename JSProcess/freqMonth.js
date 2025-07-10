@@ -7,6 +7,7 @@
   const mesTexto = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
     "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
+// gera calendário
   function gerarCalendario() {
     calendario.innerHTML = '';
     datasSelecionadas = [];
@@ -88,3 +89,20 @@
         alert('Datas salvas com sucesso!');
       });
   }
+// renderização do circulo de frêquencia
+function renderCircle(idPacienteAtual, datasSelecionadas) {
+  const percent = Math.floor((datasSelecionadas / 8) * 100);
+  const angle = (datasSelecionadas / 8) * 360;
+  const circle = document.getElementById(`circle-${idPacienteAtual}`);
+  const text = document.getElementById(`progressText-${idPacienteAtual}`);
+
+  if (!circle || !text) return;
+
+  if (percent >= 100) {
+    circle.style.background = "conic-gradient(darkgreen 0deg 360deg)";
+  } else {
+    circle.style.background = `conic-gradient(lightgreen 0deg ${angle}deg, lightgray ${angle}deg 360deg)`;
+  }
+
+  text.textContent = `${percent}%`;
+}
