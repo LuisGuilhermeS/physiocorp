@@ -33,11 +33,12 @@
         } else {
           datasSelecionadas.push(dataStr);
         }
+        renderCircle(idPacienteAtual, datasSelecionadas.length);
       });
-
+      
       calendario.appendChild(div);
     }
-
+    
     carregarDatasSalvas(); // recarrega as datas do paciente nesse mês
   }
 
@@ -66,6 +67,7 @@
             div.classList.add('selecionado');
           }
         });
+        renderCircle(idPacienteAtual, datasSelecionadas.length);
       });
   }
 
@@ -105,4 +107,19 @@ function renderCircle(idPacienteAtual, datasSelecionadas) {
   }
 
   text.textContent = `${percent}%`;
+}
+window.addEventListener('DOMContentLoaded', carregarTodasAsFrequencias);
+
+function carregarTodasAsFrequencias() {
+  fetch('getAllDates.php')
+    .then(res => res.json())
+    .then(pacientes => {
+      pacientes.forEach(p => {
+        const mesAtual = new Date();
+        const chaveMes = `${mesAtual.getFullYear()}-${String(mesAtual.getMonth() + 1).padStart(2, '0')}`;
+        const datasMes = (p.datas[chaveMes] || []).length;
+
+        renderCircle(p.id, datasMes);
+      });
+    });
 }
