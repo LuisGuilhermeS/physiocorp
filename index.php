@@ -42,12 +42,13 @@ include_once 'templates/header.php';
     margin: 0 10px;
   }
 </style>
-<div class="container">
+<div class="mx-4">
   <table class="table table-bordered table-striped rounded shadow">
     <thead>
       <tr>
         <th class="text-center">frequência mensal</th>
         <th class="text-center">nome</th>
+        <th class="text-center">horário</th>
         <th class="text-center">telefone</th>
         <th class="actions text-center">Ações</th>
       </tr>
@@ -68,7 +69,8 @@ include_once 'templates/header.php';
             </div>
           </td>
           <td><?= htmlspecialchars($paciente['nome']) ?></td>
-          <td><?= htmlspecialchars($paciente['phone']) ?></td>
+          <td><?= htmlspecialchars($paciente['hour']) ?></td>
+          <td><?= "(".htmlspecialchars($paciente['ddd']).")".htmlspecialchars($paciente['phone']) ?></td>
           <td class="actions text-center">
           <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
             <a class="btn btn-sm btn-read" href="<?=$BASE_URL?>editGym.php"><i class="fas fa-edit"></i></a>
@@ -99,7 +101,7 @@ include_once 'templates/header.php';
 
 
 <div class="text-center">
-  <a href="newGym.php" class="btn btn-success">Adicionar Paciente</a>
+  <a href="newGym.php" class="btn btn-success">+ Adicionar Paciente</a>
 </div>
 
 

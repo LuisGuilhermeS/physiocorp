@@ -1,8 +1,6 @@
 <?php
 include_once 'templates/header.php';
-
 ?>
-
 <div class="container">
 
     <div class="row">
@@ -10,13 +8,14 @@ include_once 'templates/header.php';
     </div>
 
     <form action="<?= $BASE_URL ?>config/process.php" method="POST">
-        <input type="hidden" name="type" value= "createGym">
+        <input type="hidden" name="type" value="createGym">
 
         <div class="card mb-4">
             <div class="card-header bg-light-gray">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h4 style="text-warning"><?= isset($paciente['nome']) ? htmlspecialchars($paciente['nome']) : 'Novo Paciente' ?></h4>
+                        <h4 style="text-warning">
+                            <?= isset($paciente['nome']) ? htmlspecialchars($paciente['nome']) : 'Novo Paciente' ?></h4>
                     </div>
                     <div class="circular-progress frequency-circle" data-id="<?= $paciente['id_paciente'] ?? '' ?>"
                         id="circle-<?= $paciente['id_paciente'] ?? '' ?>">
@@ -36,13 +35,11 @@ include_once 'templates/header.php';
                     </div>
                     <div class="col-md-2">
                         <label for="dataNasc" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNasc"
-                            value="#">
+                        <input type="date" class="form-control" id="dataNasc" value="#">
                     </div>
                     <div class="col-md-2">
                         <label for="age" class="form-label">Idade</label>
-                        <input type="text" class="form-control" name="age" id="age"
-                            value="#" readonly>
+                        <input type="text" class="form-control" name="age" id="age" value="#" readonly>
                     </div>
                 </div>
 
@@ -60,18 +57,19 @@ include_once 'templates/header.php';
                     </div>
 
                     <div class="col-md-5">
+                        <label for="address" class="form-label">Endereço</label>
+                        <input class="form-control " name="address" id="address" type="text"
+                            value="#">
                     </div>
 
                     <div class="col-md-1">
                         <label for="ddd" class="form-label">DDD</label>
-                        <input type="ddd" class="form-control" id="ddd"
-                            value="#">
+                        <input type="ddd" class="form-control" id="ddd" value="#">
                     </div>
 
                     <div class="col-md-3">
                         <label for="phone" class="form-label">Telefone</label>
-                        <input type="phone" class="form-control" id="phone"
-                            value="#">
+                        <input type="phone" class="form-control" id="phone" value="#">
                     </div>
                 </div>
 
@@ -79,8 +77,7 @@ include_once 'templates/header.php';
                 <div class="row">
                     <div class="col-md-12">
                         <label for="howFind" class="form-label">Como nos conheceu?</label>
-                        <textarea class="form-control" id="howFind" rows="3" name="howFind"
-                            value="#"></textarea>
+                        <textarea class="form-control" id="howFind" rows="3" name="howFind" value="#"></textarea>
                     </div>
                 </div>
             </div>
