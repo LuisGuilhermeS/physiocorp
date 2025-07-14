@@ -4,8 +4,6 @@ include_once 'config/connection.php';
 
 $dados = $_POST;
 
-$paciente =$_POST;
-
 //modificações no banco de dados
 if (!empty ($dados)){
     // lógica CRUD patient_record
@@ -46,22 +44,24 @@ if (!empty ($dados)){
 }
 //===============processGym================================================================
 
-if (!empty($paciente)){
-    if (!empty($paciente['type']=='createGym')){
+$pacientGym = $_POST;
 
-    $query = 'INSERT INTO patient_record (name, age, hour, address, ddd, phone, howFind) 
+if (!empty($pacientGym)){
+    if (!empty($pacientGym['type'] == 'createGym')){
+
+    $query = 'INSERT INTO freqMonth (name, age, hour, address, ddd, phone, howFind) 
     VALUES (:name, :age, :hour, :address, :ddd, :phone, :howFind)';
 
     $stmt = $conn->prepare($query);
 
-    $stmt->bindParam(':name', $paciente['name']);
-    $stmt->bindParam(':age', $paciente['age']);
-    $stmt->bindParam(':hour', $paciente['hour']);
-    $stmt->bindParam(':address', $paciente['address']);
-    $stmt->bindParam(':ddd', $paciente['ddd']);
-    $stmt->bindParam(':phone', $paciente['phone']);
-    $stmt->bindParam(':howFind', $paciente['howFind']);
+    $params = ['name','hour','adress','ddd','phone','homFind'];
 
+    foreach($params as $param){
+        $stmt->bindParam(':param',$pacientGym['$param']);
+    }
+    
+
+    
     if($stmt->execute()){
         $_SESSION['msg'] = 'Paciente adicionado com sucesso!';
         header('Location: '.$BASE_URL.'index.php');
@@ -72,12 +72,12 @@ if (!empty($paciente)){
         exit();
     }
 
-    }else if(!empty($paciente['type']=='editGym')){
-    }else if(!empty($paciente['type']=='deleteGym')){ 
+    }else if(!empty($pacientGym['type']=='editGym')){
+    }else if(!empty($pacientGym['type']=='deleteGym')){ 
 
-    $id = $paciente['id'];
+    $id = $pacientGym['id'];
 
-    $query = 'DELETE FROM patient_record WHERE id = :id';
+    $query = 'DELETE FROM freqMonth WHERE id = :id';
 
     $stmt = $conn->prepare($query);
 
@@ -103,7 +103,7 @@ if (!empty($paciente)){
 //retorna os dados de um contato apenas
         if(!empty($id)){
     
-        $query = 'SELECT FROM * patient_record WHERE id = :id ';
+        $query = 'SELECT FROM * freqMonth WHERE id = :id ';
 
         $stmt = $conn->prepare($query);
 
@@ -111,19 +111,19 @@ if (!empty($paciente)){
 
         $stmt->execute();
 
-        $paciente = $stmt->fetch();
+        $pacientGym = $stmt->fetch();
     }//lógica via GET Gym
     else{
         //retorna todos os pacientes salvos no banco de dados
 
-        $patient_record = [];
-        $query = 'SELECT * FROM patient_record';
+        $patientGym = [];
+        $query = 'SELECT * FROM freqMonth';
 
         $stmt = $conn->prepare($query);
 
         $stmt->execute();
         
-        $patient_record = $stmt->fetchAll();
+        $patientGym = $stmt->fetchAll();
 
     }
 }

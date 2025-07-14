@@ -123,3 +123,18 @@ function carregarTodasAsFrequencias() {
       });
     });
 }
+//================ function calcular idade ==============================================================
+
+document.getElementById('dataNasc').addEventListener('change', function () {
+    const dataNasc = new Date(this.value);
+    const today = new Date();
+    let age = today.getFullYear() - dataNasc.getFullYear();
+    const monthDiff = today.getMonth() - dataNasc.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dataNasc.getDate())) {
+      idade--;
+    }
+
+    document.getElementById('age').value = age;
+  });
+  

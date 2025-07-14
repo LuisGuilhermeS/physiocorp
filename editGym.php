@@ -15,11 +15,11 @@ include_once 'templates/header.php';
             <div class="card-header bg-light-gray">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h4><?= htmlspecialchars($paciente['nome']) ?></h4>
+                        <h4><?= htmlspecialchars($pacientGym['nome']) ?></h4>
                     </div>
-                    <div class="circular-progress frequency-circle" data-id="<?= $paciente['id'] ?? '' ?>"
-                        id="circle-<?= $paciente['id_paciente'] ?? '' ?>">
-                        <div class="progress-inner" id="progressText-<?= $paciente['id'] ?? '' ?>">0%</div>
+                    <div class="circular-progress frequency-circle" data-id="<?= $pacientGym['id'] ?? '' ?>"
+                        id="circle-<?= $pacientGym['id_paciente'] ?? '' ?>">
+                        <div class="progress-inner" id="progressText-<?= $pacientGym['id'] ?? '' ?>">0%</div>
                     </div>
 
                 </div>
@@ -31,16 +31,17 @@ include_once 'templates/header.php';
                     <div class="col-md-8">
                         <label for="nome" class="form-label">Nome Completo</label>
                         <input type="text" class="form-control" id="nome"
-                            value="<?= htmlspecialchars($paciente['nome'] ?? '') ?>">
+                            value="<?= htmlspecialchars($pacientGym['nome'] ?? '') ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="dataNasc" class="form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" id="dataNasc"
-                            value="<?= htmlspecialchars($paciente['dataNasc']) ?>">
+                            value="<?= htmlspecialchars($pacientGym['dataNasc']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="age" class="form-label">Idade</label>
-                        <input type="text" class="form-control" name="age" id="age" value="" readonly>
+                        <input type="text" class="form-control" name="age" id="age" value="age" readonly 
+                        value="<?= htmlspecialchars($pacientGym['age']) ?>">
                     </div>
                 </div>
 
@@ -60,19 +61,19 @@ include_once 'templates/header.php';
                     <div class="col-md-5">
                         <label for="address" class="form-label">Endereço</label>
                         <input class="form-control " name="address" id="address" type="text"
-                            value="<?= htmlspecialchars($paciente['address']) ?>">
+                            value="<?= htmlspecialchars($pacientGym['address']) ?>">
                     </div>
 
                     <div class="col-md-1">
                         <label for="ddd" class="form-label">DDD</label>
                         <input type="text" class="form-control" name="ddd" id="ddd"
-                            value="<?= htmlspecialchars($paciente['ddd']) ?>">
+                            value="<?= htmlspecialchars($pacientGym['ddd']) ?>">
                     </div>
 
                     <div class="col-md-3">
                         <label for="phone" class="form-label">Telefone</label>
                         <input type="text" class="form-control" id="phone"
-                            value="<?= htmlspecialchars($paciente['phone']) ?>">
+                            value="<?= htmlspecialchars($pacientGym['phone']) ?>">
                     </div>
                 </div>
 
@@ -81,7 +82,7 @@ include_once 'templates/header.php';
                     <div class="col-md-12">
                         <label for="howFind" class="form-label">Como nos conheceu?</label>
                         <textarea class="form-control" id="howFind" rows="3" name="howFind"
-                            value="<?= htmlspecialchars($paciente['howFind']) ?>"></textarea>
+                            value="<?= htmlspecialchars($pacientGym['howFind']) ?>"></textarea>
                     </div>
                 </div>
             </div>
@@ -91,7 +92,7 @@ include_once 'templates/header.php';
                 title="Voltar para a página inicial">
                 <i class="fas fa-arrow-left"></i> Voltar</a>
 
-            <button type="submit" class="btn btn-primary" id="saveBtn" title="Salvar os dados do paciente">
+            <button type="submit" class="btn btn-primary" id="saveBtn" title="Salvar os dados do pacienGymte">
                 <i class="fas fa-save"></i> Salvar
             </button>
         </div>
