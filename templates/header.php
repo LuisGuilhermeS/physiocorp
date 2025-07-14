@@ -28,4 +28,11 @@ include 'templates/navbar.html';
         <h1 class="display-4 color-name">Physiocorp</h1>
     </header>
     <body class="bg-light-green">
+        
+        <div class = "container mx-6 my-6">
+        <?php if (isset($printMsg) && $printMsg != ''): ?>
+        <P id="msg"><?= $printMsg ?></P>
+    <?php endif; ?>
+    </div>
+
        
