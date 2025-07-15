@@ -1,7 +1,7 @@
 <?php
 include_once 'templates/header.php';
 ?>
-
+ 
 <div class="mx-4">
   <?php if (count($pacientes) > 0): ?>
     <table class="table table-bordered table-striped rounded shadow">
@@ -31,7 +31,7 @@ include_once 'templates/header.php';
             <td><?= "(" . htmlspecialchars($paciente['ddd']) . ")" . htmlspecialchars($paciente['phone']) ?></td>
             <td class="actions text-center">
               <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
-                <a class="btn btn-sm btn-read" href="<?= $BASE_URL ?>newGym.php"><i class="fas fa-edit"></i></a>
+                <a class="btn btn-sm btn-read" href="<?= $BASE_URL ?>newGym.php?id=<?= $paciente['id']?>"><i class="fas fa-edit"></i></a>
                 <form method="POST" action="delete" class="d-inline">
                   <input type="hidden" name="id" value="<?= $paciente['id'] ?>">
                   <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Excluir?')">

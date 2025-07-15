@@ -126,15 +126,38 @@ function carregarTodasAsFrequencias() {
 //================ function calcular idade ==============================================================
 
 document.getElementById('dataNasc').addEventListener('change', function () {
+    
     const dataNasc = new Date(this.value);
     const today = new Date();
+    
     let age = today.getFullYear() - dataNasc.getFullYear();
     const monthDiff = today.getMonth() - dataNasc.getMonth();
 
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dataNasc.getDate())) {
-      idade--;
+      age--;
     }
 
     document.getElementById('age').value = age;
   });
   
+
+function atualizarIdade() {
+    const campoData = document.getElementById('dataNasc');
+    const campoIdade = document.getElementById('age');
+
+    if (campoData.value) {
+        const idade = calcularIdade(campoData.value);
+        campoIdade.value = age;
+    } else {
+        campoIdade.value = '';
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    // Calcula ao carregar a página
+    atualizarIdade();
+
+    // Recalcula ao mudar o valor
+    document.getElementById('dataNasc').addEventListener('change', atualizarIdade);
+});
+

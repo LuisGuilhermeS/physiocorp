@@ -14,12 +14,15 @@ $edit = isset($paciente['id']);
 
     <form action="<?= $BASE_URL ?>config/process.php" method="POST">
         <input type="hidden" name="type" value="<?= $type ?>">
+        <?php if ($edit): ?>
+          <input type="hidden" name="id" value="<?= $paciente['id'] ?>">
+        <?php endif; ?>
 
         <div class="card mb-4">
             <div class="card-header bg-light-gray">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h4><?= isset ($paciente['nome']) ? htmlspecialchars($paciente['nome'] ?? ''): 'Novo Paciente' ?></h4>
+                        <h4><?= isset ($paciente['nome']) ? htmlspecialchars($paciente['nome']): 'Novo Paciente' ?></h4>
                     </div>
                     <div class="circular-progress frequency-circle" data-id="<?= $paciente['id'] ?? '' ?>"
                         id="circle-<?= $paciente['id'] ?? '' ?>">
@@ -34,18 +37,17 @@ $edit = isset($paciente['id']);
 
                     <div class="col-md-8">
                         <label for="nome" class="form-label">Nome Completo</label>
-                        <input type="text" class="form-control" id="nome"
+                        <input type="text" class="form-control" id="nome" name="nome"
                             value="<?= htmlspecialchars($paciente['nome'] ?? '') ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="dataNasc" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNasc"
+                        <input type="date" class="form-control" id="dataNasc" name="dataNasc"
                             value="<?= htmlspecialchars($paciente['dataNasc'] ?? '') ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="age" class="form-label">Idade</label>
-                        <input type="text" class="form-control" name="age" id="age" readonly 
-                        value="age">
+                        <input type="text" class="form-control" name="age" id="age" readonly>
                     </div>
                 </div>
 
@@ -76,7 +78,7 @@ $edit = isset($paciente['id']);
 
                     <div class="col-md-3">
                         <label for="phone" class="form-label">Telefone</label>
-                        <input type="text" class="form-control" id="phone"
+                        <input type="text" class="form-control" id="phone" name="phone"
                             value="<?= htmlspecialchars($paciente['phone'] ?? '') ?>">
                     </div>
                 </div>
@@ -86,7 +88,7 @@ $edit = isset($paciente['id']);
                     <div class="col-md-12">
                         <label for="howFind" class="form-label">Como nos conheceu?</label>
                         <textarea class="form-control" id="howFind" rows="3" name="howFind"
-                            value="<?= htmlspecialchars($paciente['howFind'] ?? '') ?>"></textarea>
+                            <?= htmlspecialchars($paciente['howFind'] ?? '') ?>></textarea>
                     </div>
                 </div>
             </div>
