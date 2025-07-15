@@ -1,7 +1,5 @@
 <?php 
 include 'templates/header.php';
-include 'config/url.php';
-include 'config/process.php';
 
   // Detecta se é edição
   $isEditing = isset($patient_record['id']);

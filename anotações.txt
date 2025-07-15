@@ -321,3 +321,45 @@ Você pode reaproveitar funções para múltiplas entidades.
 Fica fácil aplicar validação e autenticação centralizada.
 
 Se quiser, posso te ajudar a transformar isso num esqueleto de projeto bem modular. Deseja isso?
+===============================process/patient_record============================================
+$dados = $_POST;
+
+//modificações no banco de dados
+if (!empty ($dados)){
+    // lógica CRUD patient_record
+    
+    //lógica via GET Patient_record
+}else{
+
+    $id;
+
+    if(!empty($_GET)){
+        $id = $_GET['id'];
+    }
+//retorna os dados de um contato apenas
+        if(!empty($id)){
+    
+        $query = 'SELECT FROM * patient_record WHERE id = :id ';
+
+        $stmt = $conn->prepare($query);
+
+        $stmt->bindParam(':id',$id);
+
+        $stmt->execute();
+
+        $paciente = $stmt->fetch();
+    }else{
+        //retorna todos os pacientes salvos no banco de dados
+
+        $patient_record = [];
+        $query = 'SELECT * FROM patient_record';
+
+        $stmt = $conn->prepare($query);
+
+        $stmt->execute();
+        
+        $patient_record = $stmt->fetchAll();
+
+    }
+}
+//===============processGym================================================================

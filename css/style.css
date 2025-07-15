@@ -167,4 +167,42 @@ color:#0c31ee;
   color:#045e51;
 }
 
+table {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+
+  .calendario {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 210px;
+    margin-top: 20px;
+  }
+
+  .dia {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+  }
+
+  .selecionado {
+    background-color: green;
+    color: white;
+  }
+
+  #mesAtual {
+    font-weight: bold;
+    margin: 0 10px;
+  }
 /*azul botão eye #5b75f3*/

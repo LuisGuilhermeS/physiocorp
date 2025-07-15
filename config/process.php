@@ -2,130 +2,115 @@
 include_once 'config/url.php'; 
 include_once 'config/connection.php';
 
+
 $dados = $_POST;
 
-//modificações no banco de dados
-if (!empty ($dados)){
-    // lógica CRUD patient_record
-    
-    //lógica via GET Patient_record
-}else{
+if (!empty($dados)){
 
-    $id;
-
-    if(!empty($_GET)){
-        $id = $_GET['id'];
-    }
-//retorna os dados de um contato apenas
-        if(!empty($id)){
-    
-        $query = 'SELECT FROM * patient_record WHERE id = :id ';
-
-        $stmt = $conn->prepare($query);
-
-        $stmt->bindParam(':id',$id);
-
-        $stmt->execute();
-
-        $paciente = $stmt->fetch();
-    }else{
-        //retorna todos os pacientes salvos no banco de dados
-
-        $patient_record = [];
-        $query = 'SELECT * FROM patient_record';
-
-        $stmt = $conn->prepare($query);
-
-        $stmt->execute();
-        
-        $patient_record = $stmt->fetchAll();
-
-    }
-}
-//===============processGym================================================================
-
-$pacientGym = $_POST;
-
-if (!empty($pacientGym)){
-    if (!empty($pacientGym['type'] == 'createGym')){
+    if ($dados['type'] == 'create'){
 
     $query = 'INSERT INTO freqMonth (name, age, hour, address, ddd, phone, howFind) 
     VALUES (:name, :age, :hour, :address, :ddd, :phone, :howFind)';
 
     $stmt = $conn->prepare($query);
 
-    $params = ['name','hour','adress','ddd','phone','homFind'];
+    $params = ['name','hour','adress','ddd','phone','howFind'];
 
     foreach($params as $param){
-        $stmt->bindParam(':param',$pacientGym['$param']);
+        $stmt->bindParam(':param',$paciente['$param']);
     }
     
+    try {
+            $stmt->execute();
+            $_SESSION['msg'] = 'paciente cadastrado com sucesso!';
+        } catch (PDOException $e) {
+            //erro na conexão
+            $error = $e->getMessage();
+            echo "erro: $error";
+        }
+        header('location:' . $BASE_URL . '../index.php');
 
+
+   
+    }else if ($dados['type'] == 'edit') {
     
-    if($stmt->execute()){
-        $_SESSION['msg'] = 'Paciente adicionado com sucesso!';
-        header('Location: '.$BASE_URL.'index.php');
-        exit();
-    }else{
-        $_SESSION['msg'] = 'Erro ao adicionar paciente!';
-        header('Location: '.$BASE_URL.'newGym.php');
-        exit();
+        if (!isset($dados['id'],
+        $dados['name'],
+        $dados['age'],
+        $dados['hour'],
+        $dados['address'],
+        $dados['ddd'],
+        $dados['phone'],
+        $dados['howFind'])) {
+        die("Campos obrigatórios não informados.");
     }
 
-    }else if(!empty($pacientGym['type']=='editGym')){
-    }else if(!empty($pacientGym['type']=='deleteGym')){ 
+    $id = $dados['id'];
 
-    $id = $pacientGym['id'];
+    $paciente = [
+        'name' => $dados['name'],
+        'age' => $dados['age'],
+        'hour' => $dados['hour'],
+        'address' => $dados['address'],
+        'ddd' => $dados['ddd'],
+        'phone' => $dados['phone'],
+        'howFind' => $dados['howFind']
+    ];
 
-    $query = 'DELETE FROM freqMonth WHERE id = :id';
-
+    $query = 'UPDATE freqMonth SET name = :name, age = :age, hour = :hour, address = :address, ddd = :ddd, phone = :phone, howFind = :howFind WHERE id = :id';
     $stmt = $conn->prepare($query);
 
-    $stmt->bindParam(':id', $id);
+    // bind dos valores com segurança
+    foreach (['name','age','hour','address','ddd','phone','howFind'] as $param) {
+        $stmt->bindValue(':'.$param, $paciente[$param]);
+    }
 
-    if($stmt->execute()){
-        $_SESSION['msg'] = 'Paciente excluído com sucesso!';
-        header('Location: '.$BASE_URL.'index.php');
-        exit();
-    }else{
-        $_SESSION['msg'] = 'Erro ao excluir paciente!';
-        header('Location: '.$BASE_URL.'index.php');
-        exit();
+    $stmt->bindValue(':id', $id);
+
+    try {
+        $stmt->execute();
+        $_SESSION['msg'] = 'Paciente editado com sucesso!';
+    } catch (PDOException $e) {
+        echo "Erro ao editar: " . $e->getMessage();
+        exit;
     }
-    }
-    header('Location: '.$BASE_URL.'index.php');
-}else{
+
+    header('Location: ' . $BASE_URL . '../index.php');
+    exit;
+}
+}else {
+
     $id;
 
-    if(!empty($_GET)){
+    if (!empty($_GET)) {
         $id = $_GET['id'];
     }
-//retorna os dados de um contato apenas
-        if(!empty($id)){
-    
-        $query = 'SELECT FROM * freqMonth WHERE id = :id ';
+    //retorna os dados de um contato
+    if (!empty($id)) {
+        $query = 'SELECT * FROM freqMonth WHERE id = :id';
 
         $stmt = $conn->prepare($query);
 
-        $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':id', $id);
 
         $stmt->execute();
 
-        $pacientGym = $stmt->fetch();
-    }//lógica via GET Gym
-    else{
-        //retorna todos os pacientes salvos no banco de dados
+        $paciente = $stmt->fetch();
 
-        $patientGym = [];
+    } else {
+        //retorna todos os pacientes salvos 
+        $pacientes = [];
         $query = 'SELECT * FROM freqMonth';
 
         $stmt = $conn->prepare($query);
 
         $stmt->execute();
-        
-        $patientGym = $stmt->fetchAll();
 
+        $pacientes = $stmt->fetchAll();
     }
 }
+
+
 $conn = null;
+
 ?>
