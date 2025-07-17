@@ -1,6 +1,10 @@
+.table{
+  border-radius: 5px;
+}
 .navbar {
     background-color: #e6dcd0;
     padding: 30px;
+    margin-bottom: 50px;
 }
 .color-name{
     font-weight: bold;
@@ -81,7 +85,7 @@
   .btn-month {
     transition: all 0.3s ease;
   }
-  /*-----------------------------------------------------------------------*/
+  /*======================frequencia circular================================================*/
       .circular-progress {
       width: 80px;
       height: 80px;
@@ -111,52 +115,74 @@
       vertical-align: middle;
       text-align: center;
     }
+/*=====================calendário===================================*/
 
-    #calendar-container {
-      max-width: 320px;
-      border: 1px solid #ccc;
-      background-color: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      margin: 20px auto;
-    }
-    
-    .calendar-day {
-      width: 36px;
-      height: 36px;
-      margin: 3px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #eee;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .calendar-day.selected {
-      background-color: #8fce8f;
-      color: white;
-    }
+#calendar-container {
+  max-width: 320px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  margin: 20px auto;
+}
 
-    .calendar-wrapper {
+.calendar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: sans-serif;
 }
 
-.calendar-weekdays {
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.calendar-weekdays,
+#calendario {
   display: grid;
   grid-template-columns: repeat(7, 36px);
   gap: 3px;
-  margin-bottom: 5px;
 }
 
-#calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 36px);
-  gap: 3px;
+.calendar-day {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
+
+.calendar-day.selected {
+  background-color: #8fce8f;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-mm:hover{
+  background-color: #0c31ee;
+  color: white;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+
+}
+.btn-savem:hover{
+  background-color: #389838;
+  color: white;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+}
+.pesquisa{
+  max-width: 320px;
+}
+/*=====================botões===================================*/
 .btn-delete{
 color:#dd1c1a;
 }
@@ -206,6 +232,7 @@ table {
     margin: 0 10px;
   }
 /*azul botão eye #5b75f3*/
+/*===================msg=====================================*/
 #msg {
     color: #155724;
     background-color: #d4edda;

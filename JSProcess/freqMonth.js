@@ -9,38 +9,59 @@
 
 // gera calendário
   function gerarCalendario() {
-    calendario.innerHTML = '';
-    datasSelecionadas = [];
+  calendario.innerHTML = '';
+  datasSelecionadas = [];
 
-    const ano = dataAtual.getFullYear();
-    const mes = dataAtual.getMonth();
-    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+  const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
-    // Atualiza o nome do mês no topo
-    document.getElementById('mesAtual').textContent = `${mesTexto[mes]} ${ano}`;
+  // Renderiza cabeçalho com dias da semana
+  diasSemana.forEach(dia => {
+    const diaSemanaDiv = document.createElement('div');
+    diaSemanaDiv.classList.add('dia-semana');
+    diaSemanaDiv.textContent = dia;
+    calendario.appendChild(diaSemanaDiv);
+  });
 
-    for (let dia = 1; dia <= diasNoMes; dia++) {
-      const dataStr = `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
-      const div = document.createElement('div');
-      div.classList.add('dia');
-      div.textContent = dia;
-      div.dataset.data = dataStr;
+  const ano = dataAtual.getFullYear();
+  const mes = dataAtual.getMonth();
+  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
 
-      div.addEventListener('click', () => {
-        div.classList.toggle('selecionado');
-        if (datasSelecionadas.includes(dataStr)) {
-          datasSelecionadas = datasSelecionadas.filter(d => d !== dataStr);
-        } else {
-          datasSelecionadas.push(dataStr);
-        }
-        renderCircle(idPacienteAtual, datasSelecionadas.length);
-      });
-      
-      calendario.appendChild(div);
-    }
-    
-    carregarDatasSalvas(); // recarrega as datas do paciente nesse mês
+  // Qual é o dia da semana do primeiro dia do mês (0 = domingo, 6 = sábado)
+  const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
+
+  // Adiciona células vazias antes do primeiro dia do mês
+  for (let i = 0; i < primeiroDiaSemana; i++) {
+    const vazio = document.createElement('div');
+    vazio.classList.add('dia', 'vazio'); // classe "vazio" só pra manter layout
+    calendario.appendChild(vazio);
   }
+
+  // Atualiza o nome do mês no topo
+  document.getElementById('mesAtual').textContent = `${mesTexto[mes]} ${ano}`;
+
+  // Cria os dias do mês
+  for (let dia = 1; dia <= diasNoMes; dia++) {
+    const dataStr = `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+    const div = document.createElement('div');
+    div.classList.add('dia');
+    div.textContent = dia;
+    div.dataset.data = dataStr;
+
+    div.addEventListener('click', () => {
+      div.classList.toggle('selecionado');
+      if (datasSelecionadas.includes(dataStr)) {
+        datasSelecionadas = datasSelecionadas.filter(d => d !== dataStr);
+      } else {
+        datasSelecionadas.push(dataStr);
+      }
+      renderCircle(idPacienteAtual, datasSelecionadas.length);
+    });
+
+    calendario.appendChild(div);
+  }
+
+  carregarDatasSalvas(); // recarrega as datas do paciente nesse mês
+}
 
   function mudarMes(incremento) {
     dataAtual.setMonth(dataAtual.getMonth() + incremento);
@@ -50,7 +71,8 @@
   function abrirCalendario(id) {
     idPacienteAtual = id;
     gerarCalendario();
-  }
+    }
+
   function carregarDatasSalvas() {
     if (!idPacienteAtual) return;
 
@@ -160,4 +182,3 @@ window.addEventListener('DOMContentLoaded', () => {
     // Recalcula ao mudar o valor
     document.getElementById('dataNasc').addEventListener('change', atualizarIdade);
 });
-

@@ -24,9 +24,6 @@ if (isset($_SESSION['msg'])) {
 <?php
 include 'templates/navbar.html';
 ?>
-    <header class="text-center mb-4">
-        <h1 class="display-4 color-name">Physiocorp</h1>
-    </header>
     <body class="bg-light-green">
         
         <div class = "container mx-6 my-6">
