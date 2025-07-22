@@ -1,13 +1,82 @@
+<style>
+  /* Centraliza o título */
+  .navbar header h1 {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  /* Container geral da navbar */
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+  }
+
+  /* Botão para abrir/fechar o menu */
+  .menu-toggle {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  /* Container do menu lateral */
+  .menu-links {
+    position: absolute;
+    left: 10px;
+    top: 50px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  .menu-links.show {
+    display: flex;
+  }
+
+</style>
+
 <nav class="navbar">
-    <a href="<?= $BASE_URL ?>calendar.php"><button class="btn">Agenda</button></a>
-    
-    <!-- <a href="<?= $BASE_URL ?>index.php"><button class="btn">Página Inicial</button></a>-->
-    
-    <header class="text-center mb-4">
-        <h1 class="display-4 color-name">Physiocorp</h1>
+  <!-- Botão que abre o menu lateral -->
+  <button class="menu-toggle mt-3" onclick="toggleMenu()">☰ Menu</button>
+
+  <!-- Título centralizado -->
+  <div class="text-center row">
+    <header>
+      <h1 class="display-4 color-name my-2">Physiocorp</h1>
     </header>
+  </div>
 
-    <!--<a href="<?= $BASE_URL ?>paciCadastrados.php"><button class="btn">Pacientes Avaliados</button></a>-->
-
+  <!-- Links escondidos -->
+  <div id="menuLinks" class="menu-links">
+    <a href="<?= $BASE_URL ?>index.php"><button class="btn">Página Inicial</button></a>
+    <a href="<?= $BASE_URL ?>calendar.php"><button class="btn">Agenda</button></a>
+    <!-- <a href="<?= $BASE_URL ?>paciCadastrados.php"><button class="btn">Pacientes Avaliados</button></a> -->
     <a href="<?= $BASE_URL ?>cadastro.php"><button class="btn">Nova Ficha de Avaliação</button></a>
+  </div>
 </nav>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('menuLinks').classList.toggle('show');
+  }
+
+  // Fecha o menu ao clicar fora dele
+  document.addEventListener('click', function(event) {
+    const menu = document.getElementById('menuLinks');
+    const toggleButton = document.querySelector('.menu-toggle');
+
+    if (!menu.contains(event.target) && !toggleButton.contains(event.target)) {
+      menu.classList.remove('show');
+    }
+  });
+</script>
