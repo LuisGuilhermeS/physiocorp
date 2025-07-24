@@ -7,7 +7,7 @@
   const mesTexto = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
     "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
-// gera calendário
+  // gera calendário
   function gerarCalendario() {
   calendario.innerHTML = '';
   datasSelecionadas = [];

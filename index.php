@@ -25,7 +25,6 @@ include_once 'templates/header.php';
 
 
     </script>
-
     
       <div class="text-center" id="calendar-container">
         <h3 class="text-center">Calendário</h3>
