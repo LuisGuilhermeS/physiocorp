@@ -12,6 +12,21 @@
   calendario.innerHTML = '';
   datasSelecionadas = [];
 
+  //gera calendário
+  // function gerarCalendario() {
+  //   if(idPacienteAtual == null)
+  //     {
+  //     calendario.innerHTML = '';
+  //     datasSelecionadas = [];
+  //   }
+  //   else
+  //   {
+  //     calendario.innerHTML = '';
+  //     datasSelecionadas = [];
+  //   }
+  // verificar se vai dar certo para gerar o calendário sem id como parametro
+
+
   const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
   // Renderiza cabeçalho com dias da semana
