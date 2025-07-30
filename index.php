@@ -27,7 +27,6 @@ include_once 'templates/header.php';
     </script>
     
       <div class="text-center" id="calendar-container">
-        <h3 class="text-center">Calendário</h3>
         <div>
           <button class="btn btn-mm" onclick="mudarMes(-1)">←</button>
           <span id="mesAtual"></span>
@@ -42,7 +41,7 @@ include_once 'templates/header.php';
 
   <div class="col-9">
     <?php if (count($pacientes) > 0): ?>
-      <table class="table table-bordered table-striped rounded shadow">
+      <table class="table-bordered table rounded shadow">
         <thead>
           <tr>
             <th class="text-center">frequência mensal</th>
